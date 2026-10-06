@@ -1,0 +1,13 @@
+node_modules/
+.env
+*.log
+
+# Scratch scripts
+update_*.js
+fix_*.js
+add_*.js
+inject_*.js
+cleanup_*.js
+replace_*.js
+migrate_*.js
+*.js.bak

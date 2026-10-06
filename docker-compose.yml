@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: proctorshield
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+
+  couchdb:
+    image: couchdb:3
+    environment:
+      COUCHDB_USER: admin
+      COUCHDB_PASSWORD: adminpassword
+    ports:
+      - "5984:5984"
+    volumes:
+      - couchdbdata:/opt/couchdb/data
+
+  neo4j:
+    image: neo4j:5
+    environment:
+      NEO4J_AUTH: neo4j/neo4jpassword
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4jdata:/data
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - PG_HOST=postgres
+      - PG_PORT=5432
+      - PG_DATABASE=proctorshield
+      - PG_USER=postgres
+      - PG_PASSWORD=postgrespassword
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - COUCHDB_URL=http://admin:adminpassword@couchdb:5984
+      - COUCHDB_DB_LOGS=proctoring_logs
+      - COUCHDB_DB_REPORTS=exam_reports
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=neo4jpassword
+      - JWT_SECRET=supersecretjwtkey123
+    depends_on:
+      - postgres
+      - redis
+      - couchdb
+      - neo4j
+
+volumes:
+  pgdata:
+  redisdata:
+  couchdbdata:
+  neo4jdata:

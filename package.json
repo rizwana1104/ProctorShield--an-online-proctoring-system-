@@ -1,0 +1,25 @@
+{
+  "name": "proctorshield",
+  "version": "1.0.0",
+  "description": "Online Proctoring System using PostgreSQL, Redis, CouchDB, and Neo4j",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "setup": "node scripts/setup-dbs.js",
+    "seed": "node scripts/seed.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "ioredis": "^5.4.1",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "nano": "^10.1.4",
+    "neo4j-driver": "^5.25.0",
+    "pg": "^8.13.0",
+    "uuid": "^10.0.0"
+  }
+}
